@@ -31,3 +31,4 @@ jobs:
  
       - name: Terraform plan (no apply)
         working-directory: terraform
+        run: terraform plan
