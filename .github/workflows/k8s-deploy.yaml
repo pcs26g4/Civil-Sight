@@ -23,7 +23,7 @@ jobs:
         run: kubectl get ns civicsight; if (!$?) { kubectl create ns civicsight }
       - name: Deploy to local Kubernetes
         run: |
-           kubectl delete pod civicsight-backend -n mdms-local --ignore-not-found
+           kubectl delete pod civicsight-backend -n civicsight --ignore-not-found
            kubectl run civicsight-backend `
              --image=civicsight-local `
              --port=8000 `
