@@ -20,7 +20,7 @@ jobs:
         run: docker images | findstr civicsight-local
 
       - name: Verify Namespace
-        run: kubectl get ns civicsight || kubectl create ns civicsight
+        run: kubectl get ns civicsight; if (!$?) { kubectl create ns civicsight }
       - name: Deploy to local Kubernetes
         run: |
            kubectl delete pod civicsight-backend -n mdms-local --ignore-not-found
