@@ -1,0 +1,29 @@
+name: Kubernetes Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+         
+      - name: Build Docker image
+        run: |
+          docker build -t civicsight-backend:local .
+
+      - name: Verify image
+        run: docker images | findstr civicsight-backend
+      - name: Deploy to local Kubernetes
+        run: |
+           kubectl delete pod civicsight-backend -n civicsight-local --ignore-not-found
+           kubectl run civicsight-backend `
+             --image=civicsight-backend:local `
+             --port=8000 `
+             --env="DATABASE_URL=postgresql://postgres.qsezkjqpjlflqtlazfal:VnzAu3rciSXYhjkb@aws-1-ap-northeast-2.pooler.supabase.com:6543/postgres" `
+             -n civicsight-local
