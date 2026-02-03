@@ -17,7 +17,7 @@ jobs:
         run: |
           docker build -t civicsight-local .
       - name: Verify image
-        run: docker images | findstr civicsight-backend
+        run: docker images | findstr civicsight-local
 
       - name: Verify Namespace
         run: kubectl get ns civicsight || kubectl create ns civicsight
