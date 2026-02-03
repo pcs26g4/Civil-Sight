@@ -21,7 +21,7 @@ jobs:
         run: docker images | findstr civicsight-backend
       - name: Deploy to local Kubernetes
         run: |
-           kubectl delete pod civicsight-backend -n civicsight-local --ignore-not-found
+           kubectl delete pod civicsight-backend -n mdms-local --ignore-not-found
            kubectl run civicsight-backend `
              --image=civicsight-backend:local `
              --port=8000 `
