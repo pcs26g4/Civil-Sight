@@ -15,15 +15,17 @@ jobs:
          
       - name: Build Docker image
         run: |
-          docker build -t civicsight-backend:local .
-
+          docker build -t civicsight-local .
       - name: Verify image
         run: docker images | findstr civicsight-backend
+
+      - name: Verify Namespace
+        run: kubectl get ns civicsight || kubectl create ns civicsight
       - name: Deploy to local Kubernetes
         run: |
            kubectl delete pod civicsight-backend -n mdms-local --ignore-not-found
            kubectl run civicsight-backend `
-             --image=civicsight-backend:local `
+             --image=civicsight-local `
              --port=8000 `
              --env="DATABASE_URL=postgresql://postgres.qsezkjqpjlflqtlazfal:VnzAu3rciSXYhjkb@aws-1-ap-northeast-2.pooler.supabase.com:6543/postgres" `
-             -n civicsight-local
+             -n civicsight
